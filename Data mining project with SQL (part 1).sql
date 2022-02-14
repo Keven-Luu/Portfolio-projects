@@ -2,7 +2,7 @@
 
 CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues, etc. 
 
-Requêtes utilisées pour le projet Tableau (partie 2 du portfolio) */
+Requêtes également utilisées pour le projet Tableau (partie 2 du portfolio) */
 
 USE ContosoRetailDW
 GO
