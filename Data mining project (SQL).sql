@@ -1,11 +1,11 @@
-/* Microsoft Contoso BI (vente au détail) data mining 
+/* Microsoft Contoso BI (vente au dÃ©tail) data mining 
 
-CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues etc. */
+CTE, Fonctions d'agrÃ©gation, Fonctions Windows, Jointures, Variables, Vues, etc. */
 
 USE ContosoRetailDW
 GO
 
-/* 1. Identifier les produits les plus rentables par unité en termes de marge de profit */
+/* 1. Identifier les produits les plus rentables par unitÃ© en termes de marge de profit */
 
 SELECT ProductName, UnitCost, UnitPrice, (UnitPrice - UnitCost) AS UnitProfit, (((UnitPrice - UnitCost) / UnitPrice) * 100) AS ProfitMarginPercentage
 FROM dbo.DimProduct 
@@ -13,7 +13,7 @@ ORDER BY ProfitMarginPercentage DESC
 
 -- Les marges de profit varient entre 48,94% pour les produits les moins rentables et 66,88% pour les produits les plus rentables
 
-/* 2. Créer une vue à partir d'un CTE pour calculer les profits totaux réalisés par produit */
+/* 2. CrÃ©er une vue Ã  partir d'un CTE pour calculer les profits totaux rÃ©alisÃ©s par produit */
 
 DROP VIEW IF EXISTS CTE1View
 
@@ -30,7 +30,7 @@ GROUP BY T5.ProductName
 SELECT *, (TotalSales - TotalCost) AS TotalProfit, (((TotalSales - TotalCost)/TotalSales)*100) AS TotalProfitMargin
 FROM CTE1
 
-/* 3. Identifier les produits les plus rentables en général et leur importance relative */
+/* 3. Identifier les produits les plus rentables en gÃ©nÃ©ral et leur importance relative */
 
 WITH CTE2 (ProductName, TotalCost, TotalSales, TotalSalesQuantity, TotalProfit, TotalProfitMargin, ProfitPercentage)
 AS
@@ -41,18 +41,18 @@ FROM CTE1View
 SELECT *, CAST(ROUND(SUM(ProfitPercentage) OVER (ORDER BY ProfitPercentage DESC), 4) AS NUMERIC(18, 4)) AS IncrementalProfitPercentage
 FROM CTE2
 
--- « Proseware Projector 1080p DLP86 White » est le produit ayant généré le plus de profits (34 622 150,34$), représentant 0,49% des profits totaux. De plus, à l'aide de la colonne « IncrementalRetailProfitPercentage », nous constatons qu'un petit nombre de produits représentent un grand pourcentage des profits totaux générés. En effet, les 496 premiers produits (ou 19,71% des produits) représentent plus de 60% des profits totaux générés. Il serait donc intéressant de porter une attention particulière à ces produits
+-- Â« Proseware Projector 1080p DLP86 White Â» est le produit ayant gÃ©nÃ©rÃ© le plus de profits (34 622 150,34$), reprÃ©sentant 0,49% des profits totaux. De plus, Ã  l'aide de la colonne Â« IncrementalRetailProfitPercentage Â», nous constatons qu'un petit nombre de produits reprÃ©sentent un grand pourcentage des profits totaux gÃ©nÃ©rÃ©s. En effet, les 496 premiers produits (ou 19,71% des produits) reprÃ©sentent plus de 60% des profits totaux gÃ©nÃ©rÃ©s. Il serait donc intÃ©ressant de porter une attention particuliÃ¨re Ã  ces produits
 
-/* 4. Créer une série chronologique pour les coûts, les prix et les profits */
+/* 4. CrÃ©er une sÃ©rie chronologique pour les coÃ»ts, les prix et les profits */
 
 SELECT DateKey, SUM(TotalCost) AS TotalCost, SUM(SalesAmount) AS TotalSales, (SUM(SalesAmount) - SUM(TotalCost)) AS TotalProfit, (((SUM(SalesAmount) - SUM(TotalCost)) / SUM(SalesAmount)) * 100) AS ProfitMarginPercentage
 FROM dbo.FactSales
 GROUP BY DateKey 
 ORDER BY DateKey
 
--- Cette requête servira à construire des visualisations de données de séries temporelles
+-- Cette requÃªte servira Ã  construire des visualisations de donnÃ©es de sÃ©ries temporelles
 
-/* 5. Créer une vue pour les coûts, les ventes et les profits par date pour subséquemment calculer le profit total réalisé (points de vente physiques) */
+/* 5. CrÃ©er une vue pour les coÃ»ts, les ventes et les profits par date pour subsÃ©quemment calculer le profit total rÃ©alisÃ© (points de vente physiques) */
 
 DROP VIEW IF EXISTS View1
 
@@ -61,16 +61,16 @@ SELECT DateKey, SUM(TotalCost) AS TotalCost, SUM(SalesAmount) AS TotalSales, (SU
 FROM dbo.FactSales
 GROUP BY DateKey 
 
-/* 6. Créer une variable contenant le profit total réalisé */
+/* 6. CrÃ©er une variable contenant le profit total rÃ©alisÃ© */
 
 DECLARE @TotalProfitEver AS NUMERIC(38,10)
 SELECT @TotalProfitEver = SUM(TotalProfit)
 FROM View1
 PRINT @TotalProfitEver
 
--- À utiliser lors des calculs de pourcentage de profit (profits générés par un produit ou une ville / profits totaux générés)
+-- Ã€ utiliser lors des calculs de pourcentage de profit (profits gÃ©nÃ©rÃ©s par un produit ou une ville / profits totaux gÃ©nÃ©rÃ©s)
 
-/* 7. Créer une vue à partir d'un CTE pour les coûts, les ventes et les profits par ville */
+/* 7. CrÃ©er une vue Ã  partir d'un CTE pour les coÃ»ts, les ventes et les profits par ville */
 
 DROP VIEW IF EXISTS CTE2View 
 
@@ -94,9 +94,9 @@ FROM CTE3
 SELECT *, CAST(ROUND(SUM(ProfitPercentage) OVER (ORDER BY ProfitPercentage DESC), 4) AS NUMERIC (18, 4)) AS IncrementalProfitPercentage
 FROM CTE2View
 
--- « Beijing » est la ville ayant généré le plus de profits en magasin (830 021 918,73$), représentant 11,76% des profits totaux. De plus, à l'aide de la colonne « IncrementalProfitPercentage », nous constatons qu'un petit nombre de villes représentent un grand pourcentage des profits totaux générés. En effet, les 15 premières villes (ou 5,70% des villes) représentent plus de 50% des profits totaux générés par les points de vente physiques. Il serait donc intéressant de porter une attention particulière à ces villes.
+-- Â« Beijing Â» est la ville ayant gÃ©nÃ©rÃ© le plus de profits en magasin (830 021 918,73$), reprÃ©sentant 11,76% des profits totaux. De plus, Ã  l'aide de la colonne Â« IncrementalProfitPercentage Â», nous constatons qu'un petit nombre de villes reprÃ©sentent un grand pourcentage des profits totaux gÃ©nÃ©rÃ©s. En effet, les 15 premiÃ¨res villes (ou 5,70% des villes) reprÃ©sentent plus de 50% des profits totaux gÃ©nÃ©rÃ©s par les points de vente physiques. Il serait donc intÃ©ressant de porter une attention particuliÃ¨re Ã  ces villes.
 
-/* 9. Créer une vue à partir d'un CTE pour calculer les profits totaux réalisés par canal */
+/* 9. CrÃ©er une vue Ã  partir d'un CTE pour calculer les profits totaux rÃ©alisÃ©s par canal */
 
 DROP VIEW IF EXISTS CTE3View
 
@@ -113,7 +113,7 @@ GROUP BY T6.ChannelName
 SELECT *, (TotalSales - TotalCost) AS TotalProfit, (((TotalSales - TotalCost)/TotalSales)*100) AS TotalProfitMargin
 FROM CTE4
 
-/* 10. Identifier les canaux les plus rentables en général et leur importance relative */
+/* 10. Identifier les canaux les plus rentables en gÃ©nÃ©ral et leur importance relative */
 
 WITH CTE5 (ChannelName, TotalCost, TotalSales, TotalSalesQuantity, TotalProfit, TotalProfitMargin, ProfitPercentage)
 AS
