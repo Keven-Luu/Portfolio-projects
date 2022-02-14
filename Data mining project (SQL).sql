@@ -52,7 +52,7 @@ ORDER BY DateKey
 
 -- Cette requête servira à construire des visualisations de données de séries temporelles
 
-/* 5. Créer une vue pour les coûts, les ventes et les profits par date pour subséquemment calculer le profit total réalisé (points de vente physiques) */
+/* 5. Créer une vue pour les coûts, les ventes et les profits par date pour subséquemment calculer le profit total réalisé */
 
 DROP VIEW IF EXISTS View1
 
