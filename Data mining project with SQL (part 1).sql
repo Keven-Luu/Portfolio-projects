@@ -1,6 +1,8 @@
 /* Microsoft Contoso BI (vente au détail) data mining 
 
-CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues, etc. */
+CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues, etc. 
+
+Requêtes utilisées pour le projet Tableau (partie 2 du portfolio) */
 
 USE ContosoRetailDW
 GO
