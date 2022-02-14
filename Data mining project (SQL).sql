@@ -41,7 +41,7 @@ FROM CTE1View
 SELECT *, CAST(ROUND(SUM(ProfitPercentage) OVER (ORDER BY ProfitPercentage DESC), 4) AS NUMERIC(18, 4)) AS IncrementalProfitPercentage
 FROM CTE2
 
--- « Proseware Projector 1080p DLP86 White » est le produit ayant généré le plus de profits (34 622 150,34$), représentant 0,49% des profits totaux. De plus, à l'aide de la colonne « IncrementalRetailProfitPercentage », nous constatons qu'un petit nombre de produits représentent un grand pourcentage des profits totaux générés. En effet, les 496 premiers produits (ou 19,71% des produits) représentent plus de 60% des profits totaux générés. Il serait donc intéressant de porter une attention particulière à ces produits
+-- « Proseware Projector 1080p DLP86 White » est le produit ayant généré le plus de profits (34 622 150,34$), représentant 0,49% des profits totaux. De plus, à l'aide de la colonne « IncrementalProfitPercentage », nous constatons qu'un petit nombre de produits représentent un grand pourcentage des profits totaux générés. En effet, les 496 premiers produits (ou 19,71% des produits) représentent plus de 60% des profits totaux générés. Il serait donc intéressant de porter une attention particulière à ces produits
 
 /* 4. Créer une série chronologique pour les coûts, les prix et les profits */
 
