@@ -94,7 +94,7 @@ FROM CTE3
 SELECT *, CAST(ROUND(SUM(ProfitPercentage) OVER (ORDER BY ProfitPercentage DESC), 4) AS NUMERIC (18, 4)) AS IncrementalProfitPercentage
 FROM CTE2View
 
--- « Beijing » est la ville ayant généré le plus de profits en magasin (830 021 918,73$), représentant 11,76% des profits totaux. De plus, à l'aide de la colonne « IncrementalProfitPercentage », nous constatons qu'un petit nombre de villes représentent un grand pourcentage des profits totaux générés. En effet, les 15 premières villes (ou 5,70% des villes) représentent plus de 50% des profits totaux générés par les points de vente physiques. Il serait donc intéressant de porter une attention particulière à ces villes.
+-- « Beijing » est la ville ayant généré le plus de profits (830 021 918,73$), représentant 11,76% des profits totaux. De plus, à l'aide de la colonne « IncrementalProfitPercentage », nous constatons qu'un petit nombre de villes représentent un grand pourcentage des profits totaux générés. En effet, les 15 premières villes (ou 5,70% des villes) représentent plus de 50% des profits totaux générés. Il serait donc intéressant de porter une attention particulière à ces villes
 
 /* 9. Créer une vue à partir d'un CTE pour calculer les profits totaux réalisés par canal */
 
