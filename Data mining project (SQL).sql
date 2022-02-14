@@ -89,7 +89,7 @@ GROUP BY SalesTerritoryName, SalesTerritoryRegion, SalesTerritoryCountry, SalesT
 SELECT *, ((TotalProfit*100)/7048761007.1076000000) AS ProfitPercentage
 FROM CTE3
 
-/* 8. Identifier les villes les plus profitables et leur importance relative en termes de profit */
+/* 8. Identifier les villes les plus rentables et leur importance relative en termes de profit */
 
 SELECT *, CAST(ROUND(SUM(ProfitPercentage) OVER (ORDER BY ProfitPercentage DESC), 4) AS NUMERIC (18, 4)) AS IncrementalProfitPercentage
 FROM CTE2View
