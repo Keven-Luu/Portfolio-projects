@@ -1,8 +1,7 @@
-/* Microsoft Contoso BI (vente au détail) data mining 
+/* Contoso (fictional company) data mining 
 
-CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues, etc. 
 
-Requêtes également utilisées pour le projet Tableau (partie 2 du portfolio) */
+CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues, etc. */
 
 USE ContosoRetailDW
 GO
@@ -32,7 +31,7 @@ GROUP BY T5.ProductName
 SELECT *, (TotalSales - TotalCost) AS TotalProfit, (((TotalSales - TotalCost)/TotalSales)*100) AS TotalProfitMargin
 FROM CTE1
 
-/* 3. Identifier les produits les plus rentables en général et leur importance relative */
+/* 3. Identifier les produits les plus rentables en général et leur importance relative en termes de profit */
 
 WITH CTE2 (ProductName, TotalCost, TotalSales, TotalSalesQuantity, TotalProfit, TotalProfitMargin, ProfitPercentage)
 AS
@@ -51,8 +50,6 @@ SELECT DateKey, SUM(TotalCost) AS TotalCost, SUM(SalesAmount) AS TotalSales, (SU
 FROM dbo.FactSales
 GROUP BY DateKey 
 ORDER BY DateKey
-
--- Cette requête servira à construire des visualisations de données de séries temporelles
 
 /* 5. Créer une vue pour les coûts, les ventes et les profits par date pour subséquemment calculer le profit total réalisé */
 
@@ -115,7 +112,7 @@ GROUP BY T6.ChannelName
 SELECT *, (TotalSales - TotalCost) AS TotalProfit, (((TotalSales - TotalCost)/TotalSales)*100) AS TotalProfitMargin
 FROM CTE4
 
-/* 10. Identifier les canaux les plus rentables en général et leur importance relative */
+/* 10. Identifier les canaux les plus rentables en général et leur importance relative en termes de profit */
 
 WITH CTE5 (ChannelName, TotalCost, TotalSales, TotalSalesQuantity, TotalProfit, TotalProfitMargin, ProfitPercentage)
 AS
