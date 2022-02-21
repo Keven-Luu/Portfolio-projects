@@ -1,5 +1,4 @@
-/* Contoso (fictional company) data mining 
-
+/* Contoso (entreprise fictive) data mining 
 
 CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues, etc. */
 
