@@ -1,9 +1,9 @@
-/* Nettoyage de données avec SQL */ 
+/* Nettoyage de donnÃ©es avec SQL */ 
 
 USE DataCleaningProject2
 GO
 
-/* 1.1 Calculer la valeur moyenne des valeurs cohérentes de ObjectBeginDate pour subséquemment imputer aux valeurs incohérentes */
+/* 1.1 Calculer la valeur moyenne des valeurs cohÃ©rentes de ObjectBeginDate pour subsÃ©quemment imputer aux valeurs incohÃ©rentes */
 
 SELECT SUM(ObjectBeginDate) AS SommeObjectBeginDate, COUNT(*) AS NombreObjectBeginDate, SUM(ObjectBeginDate)/COUNT(*) AS MoyenneObjectBeginDate
 FROM dbo.MetObjects
@@ -11,7 +11,7 @@ WHERE (ObjectBeginDate <= ObjectEndDate)
 AND ( (ObjectEndDate != 0) 
 OR (ObjectBeginDate != 0 AND ObjectEndDate = 0) )
 
-/* 1.2 Calculer la valeur moyenne des valeurs cohérentes de ObjectEndDate pour subséquemment imputer aux valeurs incohérentes */
+/* 1.2 Calculer la valeur moyenne des valeurs cohÃ©rentes de ObjectEndDate pour subsÃ©quemment imputer aux valeurs incohÃ©rentes */
 
 SELECT SUM(ObjectEndDate) AS SommeObjectEndDate, COUNT(*) AS NombreObjectEndDate, SUM(ObjectEndDate)/COUNT(*) AS MoyenneObjectEndDate
 FROM dbo.MetObjects
@@ -19,7 +19,7 @@ WHERE (ObjectBeginDate <= ObjectEndDate)
 AND ( (ObjectEndDate != 0) 
 OR (ObjectBeginDate != 0 AND ObjectEndDate = 0) )
 
-/* 1.3 Remplacer les valeurs incohérentes de ObjectBeginDate par 1297 et les valeurs incohérentes de ObjectEndDate par 1399 */
+/* 1.3 Remplacer les valeurs incohÃ©rentes de ObjectBeginDate par 1297 et les valeurs incohÃ©rentes de ObjectEndDate par 1399 */
 
 UPDATE dbo.MetObjects
 SET ObjectBeginDate = 1297,
@@ -55,7 +55,7 @@ WHEN Culture = ' ' THEN 'Unknown'
 ELSE Culture
 END 
 
-/* 4.1 Décomposer l'adresse Repository en colonnes individuelles à l'aide des virgules */
+/* 4.1 DÃ©composer l'adresse Repository en colonnes individuelles Ã  l'aide des virgules */
 
 ALTER TABLE dbo.MetObjects
 ADD RepositoryName NVARCHAR (255); 
@@ -76,7 +76,7 @@ ADD RepositoryState NVARCHAR (255);
 UPDATE dbo.MetObjects
 SET RepositoryState = RIGHT(Repository, CHARINDEX(',', REVERSE(Repository))-1) 
 
-/* 4.2 Supprimer l'adresse Repository (colonne désormais inutile) */
+/* 4.2 Supprimer l'adresse Repository (colonne dÃ©sormais inutile) */
 
 ALTER TABLE dbo.MetObjects
 DROP COLUMN Repository
@@ -116,7 +116,7 @@ WHEN IsPublicDomain = 0 THEN 'No'
 ELSE IsPublicDomain
 END
 
-/* 6. Supprimer les duplications présumées (lorsque ObjectNumber, AccessionYear, ObjectDate et RepositoryName sont identiques) */
+/* 6. Supprimer les duplications prÃ©sumÃ©es (lorsque ObjectNumber, AccessionYear, ObjectDate et RepositoryName sont identiques) */
 
 WITH CTENombreLignes AS(
 SELECT *,
