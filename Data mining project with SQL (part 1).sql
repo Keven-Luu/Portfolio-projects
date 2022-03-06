@@ -1,6 +1,8 @@
 /* Contoso (entreprise fictive) data mining 
 
-CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues, etc. */
+CTE, Fonctions d'agrégation, Fonctions Windows, Jointures, Variables, Vues, etc. 
+
+"Contoso is a fictional company used by Microsoft as an example company" */
 
 USE ContosoRetailDW
 GO
