@@ -1,15 +1,19 @@
 /* Nettoyage de données avec SQL */ 
 
+Outils utilisés : SQL, CTE, Excel, Fonctions d’agrégation, Fonctions Windows */ 
+
 USE DataCleaningProject2
 GO
 
-/* 1.1 Calculer la valeur moyenne des valeurs cohérentes de ObjectBeginDate pour subséquemment imputer aux valeurs incohérentes */
+/* 1.1 Calculer la valeur moyenne des valeurs cohérentes de ObjectBeginDate pour subséquemment imputer aux valeurs incohérentes de la même colonne */
 
 SELECT SUM(ObjectBeginDate) AS SommeObjectBeginDate, COUNT(*) AS NombreObjectBeginDate, SUM(ObjectBeginDate)/COUNT(*) AS MoyenneObjectBeginDate
 FROM dbo.MetObjects
 WHERE (ObjectBeginDate <= ObjectEndDate)
 AND ( (ObjectEndDate != 0) 
 OR (ObjectBeginDate != 0 AND ObjectEndDate = 0) )
+
+-- Les valeurs sont présumées cohérentes lorsque leur date de début précède ou égale leur date de fin et lorsque leur date de fin et leur date de début ne sont pas toutes les deux égales à 0
 
 /* 1.2 Calculer la valeur moyenne des valeurs cohérentes de ObjectEndDate pour subséquemment imputer aux valeurs incohérentes */
 
@@ -23,9 +27,11 @@ OR (ObjectBeginDate != 0 AND ObjectEndDate = 0) )
 
 UPDATE dbo.MetObjects
 SET ObjectBeginDate = 1297,
-	ObjectEndDate = 1399
+    ObjectEndDate = 1399
 WHERE (ObjectBeginDate = 0 AND ObjectEndDate = 0)
 OR (ObjectBeginDate > ObjectEndDate)
+
+-- Les valeurs sont présumées incohérentes lorsque leur date de fin précède leur date de début ou lorsque leur date de fin et leur date de début sont toutes les deux égales à 0
 
 /* 2. Standardiser les formats de ObjectDate */
 
@@ -57,11 +63,15 @@ END
 
 /* 4.1 Décomposer l'adresse Repository en colonnes individuelles à l'aide des virgules */
 
+-- Les adresses sont toutes dans le même format : RepositoryName, RepositoryCity, RepositoryState (e.g. Metropolitan Museum of Art, New York, NY)
+
 ALTER TABLE dbo.MetObjects
 ADD RepositoryName NVARCHAR (255); 
 
 UPDATE dbo.MetObjects
 SET RepositoryName = SUBSTRING(Repository, 1, (CHARINDEX(',', Repository) -1)) 
+
+-- Pour prélever le RepositoryName, extraire à partir de la gauche tous les caractères jusqu'à l'occurrence de la première virgule (exclue)
 
 ALTER TABLE dbo.MetObjects
 ADD RepositoryCity NVARCHAR (255); 
