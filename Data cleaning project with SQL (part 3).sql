@@ -47,6 +47,8 @@ WHEN ObjectBeginDate < 0 AND ObjectEndDate >= 0 THEN CONCAT(ABS(ObjectBeginDate)
 ELSE CONCAT('AD ', ObjectBeginDate,' - ', 'AD ', ObjectEndDate)
 END
 
+-- Format recherché : DateDébut(BC ou AD)-DateFin(BC ou AD) en valeur absolue
+
 /* 3. Remplacer les valeurs NULL ou manquantes par Unknown */
 
 UPDATE dbo.MetObjects
