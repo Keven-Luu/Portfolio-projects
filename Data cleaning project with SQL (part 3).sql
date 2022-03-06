@@ -94,7 +94,7 @@ ADD RepositoryState NVARCHAR (255);
 UPDATE dbo.MetObjects
 SET RepositoryState = RIGHT(Repository, CHARINDEX(',', REVERSE(Repository))-1) 
 
--- Pour prélever l'état, extraire à partir de la droite tous les caractères jusqu'à l'occurrence de la première virgule 
+-- Pour prélever l'état, extraire à partir de la droite tous les caractères jusqu'à l'occurrence de la première virgule (de droite à gauche)
 
 /* 4.2 Supprimer l'adresse Repository (colonne désormais inutile) */
 
