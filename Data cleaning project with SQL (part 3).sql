@@ -1,6 +1,8 @@
 /* Nettoyage de données avec SQL 
 
-Outils utilisés : SQL, CTE, Excel, Fonctions d’agrégation, Fonctions Windows */ 
+Outils utilisés : SQL, CTE, Excel, Fonctions d’agrégation, Fonctions Windows 
+
+Source de données utilisée : https://github.com/metmuseum/openaccess/ ("The Metropolitan Museum of Art presents over 5,000 years of art from around the world for everyone to experience and enjoy")*/ 
 
 USE DataCleaningProject2
 GO
