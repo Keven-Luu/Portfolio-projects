@@ -1,4 +1,4 @@
-/* Nettoyage de données avec SQL */ 
+/* Nettoyage de données avec SQL 
 
 Outils utilisés : SQL, CTE, Excel, Fonctions d’agrégation, Fonctions Windows */ 
 
