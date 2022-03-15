@@ -74,27 +74,27 @@ END
 ALTER TABLE dbo.MetObjects
 ADD RepositoryName NVARCHAR (255); 
 
+-- Pour prélever le nom, extraire à partir de la gauche tous les caractères jusqu'à l'occurrence de la première virgule (exclue)
+
 UPDATE dbo.MetObjects
 SET RepositoryName = SUBSTRING(Repository, 1, (CHARINDEX(',', Repository) -1)) 
 
--- Pour prélever le nom, extraire à partir de la gauche tous les caractères jusqu'à l'occurrence de la première virgule (exclue)
-
 ALTER TABLE dbo.MetObjects
 ADD RepositoryCity NVARCHAR (255); 
+
+-- Pour prélever la ville, extraire à partir de la première virgule tous les caractères jusqu'à l'occurrence de la deuxième virgule
 
 UPDATE dbo.MetObjects
 SET RepositoryCity = 
 SUBSTRING(Repository, CHARINDEX(',', Repository, 1) +1, CHARINDEX(',', Repository, CHARINDEX(',', Repository)+1) - CHARINDEX(',', Repository) -1)
 
--- Pour prélever la ville, extraire à partir de la première virgule tous les caractères jusqu'à l'occurrence de la deuxième virgule
-
 ALTER TABLE dbo.MetObjects
 ADD RepositoryState NVARCHAR (255); 
 
+-- Pour prélever l'état, extraire à partir de la droite tous les caractères jusqu'à l'occurrence de la première virgule (de droite à gauche)
+
 UPDATE dbo.MetObjects
 SET RepositoryState = RIGHT(Repository, CHARINDEX(',', REVERSE(Repository))-1) 
-
--- Pour prélever l'état, extraire à partir de la droite tous les caractères jusqu'à l'occurrence de la première virgule (de droite à gauche)
 
 /* 4.2 Supprimer l'adresse Repository (colonne désormais inutile) */
 
